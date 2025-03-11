@@ -67,8 +67,11 @@ export const taskSlice = createSlice({
         state.tasks = action.payload;
       })
       .addCase(addAxiosTask.fulfilled, (state, action) => {
-        state.tasks.push(action.payload); // Ensure Redux gets updated
-      })
+        const isTaskExist = state.tasks.some((task) => task._id === action.payload._id);
+        if (!isTaskExist) {
+          state.tasks.push(action.payload); // Prevent duplicates
+        }
+      })
       .addCase(updateAxiosTask.fulfilled, (state, action) => {
         state.tasks = state.tasks.map((task) =>
           task._id === action.payload._id ? action.payload : task
