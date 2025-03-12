@@ -6,25 +6,25 @@ const initialState = {
   todo: { title: "", status: "1" },
 };
 
-// const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const fetchAxiosTasks = createAsyncThunk(
   "tasks/fetchTasks",
   async () => {
-    const response = await axios.get(`http://localhost:5000/api/tasks`);
+    const response = await axios.get(`${BASE_URL}/tasks`);
     return response.data?.tasks;
   }
 );
 
 export const addAxiosTask = createAsyncThunk("tasks/addTask", async (task) => {
-  const response = await axios.post(`http://localhost:5000/api/tasks`, task);
+  const response = await axios.post(`${BASE_URL}/tasks`, task);
   return response.data.task;
 });
 
 export const updateAxiosTask = createAsyncThunk(
   "tasks/updateTask",
   async (task) => {
-    await axios.put(`http://localhost:5000/api/tasks/${task._id}`, task);
+    await axios.put(`${BASE_URL}/tasks/${task._id}`, task);
     return task;
   }
 );
@@ -32,7 +32,7 @@ export const updateAxiosTask = createAsyncThunk(
 export const deleteAxiosTask = createAsyncThunk(
   "tasks/deleteTask",
   async (taskId) => {
-    await axios.delete(`http://localhost:5000/api/tasks/${taskId}`);
+    await axios.delete(`${BASE_URL}/tasks/${taskId}`);
     return taskId;
   }
 );
